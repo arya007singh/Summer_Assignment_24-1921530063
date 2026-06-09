@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+       vector<int> result;
+
+       int n = s.size();
+       int m = p.size(); 
+
+       if(n<m) {
+        return result;
+       }
+
+       vector<int> pCount(26,0);
+
+       for(char ch : p) {
+        pCount[ch - 'a']++;
+       }
+       for(int i = 0; i<= n-m; i++) {
+        vector<int> currCount(26,0);
+
+        for(int j = i; j<i+m; j++) {
+            currCount[s[j]-'a']++;
+        }
+        if(currCount == pCount) {
+            result.push_back(i);
+        }
+       }
+       return result;
+    }
+};

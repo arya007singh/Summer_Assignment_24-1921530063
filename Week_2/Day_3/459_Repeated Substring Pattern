@@ -1,0 +1,19 @@
+class Solution {
+public:
+    bool repeatedSubstringPattern(string s) {
+       int n = s.size();
+
+       for(int i = 1; i < n; i++) {
+        string pattern = s.substr(0 , i);
+        string current = "";
+
+        while(current.size() < n) {
+            current += pattern;
+        }
+        if(current == s) {
+            return true;
+        }
+       } 
+       return false;
+    }
+};

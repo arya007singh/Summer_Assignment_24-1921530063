@@ -1,0 +1,41 @@
+class MyQueue {
+public:
+stack<int> inputStack;
+stack<int> outputStack;
+
+    MyQueue() {
+        
+    }
+    
+    void push(int x) {
+       inputStack.push(x); 
+    }
+    
+    int pop() {
+        moveElements();
+
+        int frontElement = outputStack.top();
+        outputStack.pop();
+        
+        return frontElement;
+    }
+    
+    int peek() {
+        moveElements();
+        return outputStack.top();
+    }
+    
+    bool empty() {
+        return inputStack.empty() && outputStack.empty();
+    }
+    private:
+    
+    void moveElements() {
+        if (outputStack.empty()) {
+            while (!inputStack.empty()) {
+                outputStack.push(inputStack.top());
+                inputStack.pop();
+            }
+        }
+    }
+};

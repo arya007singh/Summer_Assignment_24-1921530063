@@ -1,0 +1,67 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+class Codec {
+public:
+
+    void serializeTree(TreeNode* root, string &result) {
+        if (root == nullptr) {
+            result += "N,";
+            return;
+        }
+
+        result += to_string(root->val) + ",";
+
+        serializeTree(root->left, result);
+        serializeTree(root->right, result);
+    }
+
+
+    // Encodes a tree to a string string
+    string serialize(TreeNode* root) {
+        string result = "";
+        serializeTree(root, result);
+        return result;
+    }
+
+    TreeNode* buildTree(vector<string> &values, int &index) {
+        if (values[index] == "N") {
+            index++;
+            return nullptr;
+        }
+
+        TreeNode* root = new TreeNode(stoi(values[index]));
+        index++;
+
+        root->left = buildTree(values, index);
+        root->right = buildTree(values, index);
+
+        return root;
+    }
+
+
+   // Decode your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        vector<string> values;
+        string current = "";
+
+        for (char ch : data) {
+            if (ch == ',') {
+                values.push_back(current);
+                current = "";
+            } else {
+                current += ch;
+            }
+        }
+
+        int index = 0;
+        return buildTree(values, index);
+    }
+};
